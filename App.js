@@ -1,17 +1,7 @@
-const parents = React.createElement(
-  "div",
-  { id: "parents" },
-  "Namaste React Parents"
-);
+import React from "react";
+import ReactDOM from "react-dom/client";
 
-const parent = React.createElement(
-  "div",
-  { id: "parents" },
-  React.createElement(
-    "div",
-    { id: "child" },
-    React.createElement("h1", { id: "heading" }, "Namaste React")
-  )
-);
+const HeadingComponent = () => <h1 id="heading">Namaste React</h1>;
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(parent);
+root.render(<HeadingComponent />);
