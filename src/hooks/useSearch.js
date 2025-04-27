@@ -22,7 +22,6 @@ export const useSearch = () => {
       const res = await data.json();
       setResult(res.data?.suggestions);
       setSearchText(res.data?.query);
-      console.log("res", res.data?.suggestions);
     } catch (err) {
       console.log(err);
     }

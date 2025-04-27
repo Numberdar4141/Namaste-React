@@ -36,7 +36,6 @@ export const useResturantList = () => {
     const filtered = originalList.filter((res) =>
       res.info.name.toLowerCase().includes(searchText.toLowerCase())
     );
-    console.log("🚀 ~ filtered ~ filtered:", filtered);
     setResTopList(filtered);
   };
 

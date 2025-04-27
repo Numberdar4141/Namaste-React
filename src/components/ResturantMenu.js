@@ -2,10 +2,19 @@ import { useParams } from "react-router-dom";
 import { useResturantMenu } from "../hooks/useResturantMenu";
 import Shimmer from "./Shimmer";
 import { RESTAURANT_DETAILS_IMAGE_URL } from "../utils/constants";
+import { ResturantCatogery } from "./ResturantCatogery";
+import { useState } from "react";
 
 const ResturantMenu = () => {
   const { resId } = useParams();
-  const { resInfo, itemCards } = useResturantMenu(resId);
+  const [exapndIndex, setExapndIndex] = useState(-1);
+  const { resInfo, itemCards, categories } = useResturantMenu(resId);
+
+  const catogoriesList = categories.filter(
+    (cat) =>
+      cat.card?.card?.["@type"] ===
+      "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+  );
 
   return resInfo.length === 0 ? (
     <Shimmer />
@@ -32,36 +41,16 @@ const ResturantMenu = () => {
           </div>
         </div>
         <h2 className="text-2xl mt-4 font-bold">Menu</h2>
-        <ul className="mt-4 bg-white flex flex-col gap-8">
-          {itemCards.map((item) => (
-            <li
-              key={item?.card?.info?.id}
-              className="flex items-center p-4 cursor-pointer rounded-md shadow-md justify-between"
-            >
-              <div className="flex flex-col">
-                <span className="text-2xl font-semibold">
-                  {item?.card?.info?.name}
-                </span>
-                <span className="text-xl font-bold">
-                  Rs.{" "}
-                  {item?.card?.info?.price / 100 ||
-                    item?.card?.info?.defaultPrice / 100}
-                </span>
-                <span
-                  title={item?.card?.info?.description}
-                  className="text-sm w-[80%] line-clamp-2"
-                >
-                  {item?.card?.info?.description}
-                </span>
-              </div>
-              <img
-                src={`${RESTAURANT_DETAILS_IMAGE_URL}${item?.card?.info?.imageId}`}
-                className="w-[200px] rounded-2xl"
-                alt="resturant"
-              />
-            </li>
-          ))}
-        </ul>
+        {catogoriesList.map((cat, index) => {
+          return (
+            <ResturantCatogery
+              key={index}
+              setshowItem={() => setExapndIndex(exapndIndex === index ? -1 : index)}
+              showItem={exapndIndex === index}
+              data={cat.card.card}
+            />
+          );
+        })}
       </div>
     </div>
   );

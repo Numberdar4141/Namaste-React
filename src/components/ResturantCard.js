@@ -33,3 +33,16 @@ const ResturantCard = (props) => {
   );
 };
 export default ResturantCard;
+
+export const withLabelPrmoted = (ResturantCard) => {
+  return (props) => {
+    return (
+      <div>
+        <label className="bg-green-500 absolute text-xs  text-white font-bold py-1 px-2 ">
+          Open
+        </label>
+        <ResturantCard {...props} />
+      </div>
+    );
+  };
+};

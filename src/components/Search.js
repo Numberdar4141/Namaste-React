@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 const Search = () => {
   const [result, setResult] = useState([]);
   const [showResult, setShowResult] = useState(false);
-  const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
   const [input, setInput] = useState("");
   const fetchData = async () => {
@@ -16,8 +15,6 @@ const Search = () => {
       );
       const res = await data.json();
       setResult(res.data?.suggestions);
-      setSearchText(res.data?.query);
-      console.log("res", res.data?.suggestions);
     } catch (err) {
       console.log(err);
     }
@@ -35,7 +32,7 @@ const Search = () => {
 
   const handleSelect = (t) => {
     setInput(t.text);
-    navigate(`/search/${searchText}`);
+    navigate(`/search/${t.text}`,{ state: t });
     setShowResult(false);
   };
 
